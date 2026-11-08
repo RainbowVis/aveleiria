@@ -35,39 +35,6 @@ figcaption b {
     font: 700 18px Bricolage Grotesque, sans-serif
 }
 
-.lb {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    background: rgba(10, 8, 18, .95);
-    display: flex;
-    flex-direction: column;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px)
-}
-
-.lbbar {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-    padding: 10px 14px
-}
-
-.lbimg {
-    flex: 1;
-    overflow: auto;
-    padding: 0 14px 14px
-}
-
-.lbimg img {
-    display: block;
-    background: #fff;
-    border-radius: 8px;
-    height: auto;
-    max-width: none;
-    cursor: zoom-in
-}
-
 .wm {
     position: relative;
     display: block;
@@ -110,8 +77,91 @@ figcaption b {
     object-fit: cover
 }
 
-.lbimg .wm {
+.lb {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(10, 8, 18, 0.96);
+    display: flex;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px)
+}
+
+.lbbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 14px;
+    color: #ebe8f7
+}
+
+.lbt {
+    font: 700 16px Bricolage Grotesque, sans-serif
+}
+
+.lbc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px
+}
+
+.lbp {
+    min-width: 3.4em;
+    text-align: center;
+    font-size: 14px;
+    color: #cfcbe6
+}
+
+.lbc .chip {
+    min-width: 40px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px
+}
+
+.lbbox {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none
+}
+
+.vimg {
+    will-change: transform;
+    transform-origin: center center
+}
+
+.vimg .wm {
+    display: inline-block;
+    line-height: 0;
     background: #fff;
     border-radius: 8px;
-    cursor: zoom-in
+    cursor: inherit
+}
+
+.vimg .wm img {
+    width: auto;
+    max-width: calc(100vw - 28px);
+    max-height: calc(100vh - 150px);
+    max-height: calc(100dvh - 150px);
+    height: auto
+}
+
+.lbh {
+    margin: 0;
+    padding: 8px 14px 12px;
+    text-align: center;
+    font-size: 13px;
+    color: #a29ebd
 }
