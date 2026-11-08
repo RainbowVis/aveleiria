@@ -1,6 +1,12 @@
+// =========================
+// React Elements
+// =========================
 const h = React.createElement,
   { useState, useEffect, useRef } = React;
 
+// =========================
+// Variables
+// =========================
 const ST = {
   M: ["Mandatory", "hsl(var(--h) 95% 62%)"],
   O: ["Optional", "#4fd1c5"],
@@ -8,19 +14,22 @@ const ST = {
   U: ["Undecided", "#f5b041"],
 };
 
+// =========================
+// Site Tabs
+// =========================
 const TABS = [
-  ["Reference sheet", []],
+  ["Reference Sheet", []],
   [
     "Appearance",
     [
       [
-        "Facial shape",
+        "Facial Shape",
         "The general face shape is the same on every Religy.",
         "M",
       ],
       ["Eyes", "Large eyes. Size and iris appearance can vary.", "M"],
       ["Eyebrows", "Optional.", "O"],
-      ["Head hair", "Optional. Any length or volume.", "O"],
+      ["Head Hair", "Optional. Any length or volume.", "O"],
       [
         "Body",
         "Furry, partly furred, or sleek. Skinny, chubby, muscular, or otherwise varied. Usually somewhat chubby. Normal proportions are the standard, but they can vary dramatically.",
@@ -48,22 +57,22 @@ const TABS = [
       ],
       ["Whiskers", "If present, they have no sensory function.", "O"],
       [
-        "Chest fluff",
+        "Chest Fluff",
         "Shown as the chest marking on the reference sheet. It isn’t necessarily a real marking.",
         "E",
       ],
     ],
   ],
   [
-    "Color & glow",
+    "Color & Glow",
     [
       [
-        "Color range",
+        "Color Range",
         "Practically any color: gradients, stripes, spots, patterns, multicolor, rainbow, and different colors on different body regions. Darker hues are common because of the caverns.",
         "O",
       ],
       [
-        "Black & white",
+        "Black & White",
         "Possible. White is commonly associated with albinism, and brightly colored individuals can also be albino.",
         "O",
       ],
@@ -72,7 +81,7 @@ const TABS = [
         "Exceptionally unusual. Metallic Religy may be treated as treasure by their species.",
         "O",
       ],
-      ["Color morphs", "Naturally occurring morphs exist.", "E"],
+      ["Color Morphs", "Naturally occurring morphs exist.", "E"],
       [
         "Babies",
         "Pale versions of their adult color. It deepens as they mature.",
@@ -103,11 +112,11 @@ const TABS = [
         "Precious metals, valuable minerals, and luminous, colorful crystals. Cavern crystals are inedible.",
         "E",
       ],
-      ["Crystal system & geography", "Not yet developed.", "U"],
+      ["Crystal System & Geography", "Not yet developed.", "U"],
     ],
   ],
   [
-    "Mind & society",
+    "Mind & Society",
     [
       [
         "Intelligence",
@@ -115,7 +124,7 @@ const TABS = [
         "E",
       ],
       [
-        "Social life",
+        "Social Life",
         "Naturally social. They prefer large groups and live in colonies.",
         "E",
       ],
@@ -170,7 +179,7 @@ const TABS = [
         "E",
       ],
       [
-        "Underwater breathing",
+        "Underwater Breathing",
         "Only certain types of Religy can breathe underwater, mostly those with a sleek body and sleek, pointy ears. How it works is not yet decided.",
         "U",
       ],
@@ -190,12 +199,12 @@ const TABS = [
         "E",
       ],
       [
-        "Cuts & blows",
+        "Cuts & Blows",
         "They handle them well, like trying to punch or cut through an armored vest.",
         "E",
       ],
       [
-        "Extreme temperatures",
+        "Extreme Temperatures",
         "Both extremes are deadly. They can withstand heat up to around the point where iron starts to melt (about 2,800°F), and cold down to around −40°F. Beyond that, extreme heat can boil them alive, and depending on the Religy, their bodies may implode or explode. Extreme cold is the reverse: they freeze internally and die.",
         "E",
       ],
@@ -205,16 +214,16 @@ const TABS = [
     "Diet",
     [
       [
-        "Diet type",
+        "Diet Type",
         "Mostly omnivores or herbivores. Pure carnivores are exceptionally rare.",
         "E",
       ],
       [
-        "Acid sensitivity",
+        "Acid Sensitivity",
         "Highly acidic food causes severe internal damage. Organs deteriorate over about a day, and it can be fatal. Acidic food is generally unpleasant, but taste isn’t a dependable warning.",
         "E",
       ],
-      ["Spoiled food", "They can see when food looks spoiled or rotten.", "E"],
+      ["Spoiled Food", "They can see when food looks spoiled or rotten.", "E"],
       [
         "Favorites",
         "Fresh bread, fresh ice cream (vanilla, cookie dough), and Alfredo pizza. They commonly dislike sushi, fish, and seafood. Individuals vary.",
@@ -225,7 +234,7 @@ const TABS = [
   [
     "Reproduction",
     [
-      ["Sexes", "Male and female, plus a rare dual-sex condition.", "E"],
+      ["Sexes", "Male and Female, plus a rare dual-sex condition.", "E"],
       [
         "Offspring",
         "Females carry and produce offspring. A dual-sex individual can reproduce only if they have breasts.",
@@ -236,14 +245,14 @@ const TABS = [
         "Other Religy, humans, and other species. Offspring are always Religy, never hybrids.",
         "E",
       ],
-      ["Inheritance mechanism", "Undecided.", "U"],
-      ["Gender identity & social gender", "Not yet established.", "U"],
+      ["Inheritance Mechanism", "Undecided.", "U"],
+      ["Gender Identity & Social Gender", "Not yet established.", "U"],
     ],
   ],
   [
-    "Life cycle",
+    "Life Cycle",
     [
-      ["Ears & tails", "Develop at about 1–3 years.", "E"],
+      ["Ears & Tails", "Develop at about 1–3 years.", "E"],
       ["Glow", "Begins developing around age 10.", "E"],
       [
         "Maturity",
@@ -267,8 +276,8 @@ const TABS = [
         "E",
       ],
       [
-        "Telepathic ear communication",
-        "Silent and inaudible to humans. All Religy can use it, privately, with several individuals, or potentially a whole group. Humans can learn to take part. Mechanism, terminology, range, and limits are undecided.",
+        "Telepathic Ear Communication",
+        "Silent and inaudible to Humans. All Religy can use it, privately, with several individuals, or potentially a whole group. Humans can learn to take part. Mechanism, terminology, range, and limits are undecided.",
         "U",
       ],
       [
@@ -276,50 +285,59 @@ const TABS = [
         "Like the best scent-tracking dogs. They recognize individuals by scent, track people and objects, and use smell for family, colony, mate, food, and danger recognition. They can’t smell through solid barriers. They love fresh bread.",
         "E",
       ],
-      ["Taste", "Essentially the same as human taste.", "E"],
+      ["Taste", "Essentially the same as Human Taste.", "E"],
       [
         "Touch",
-        "Roughly human, with some specialized, more sensitive regions. They can feel through fur. Ears and tails aren’t especially sensitive.",
+        "Roughly Human, with some specialized, more sensitive regions. They can feel through Fur. Ears and Tails aren’t especially sensitive.",
         "E",
       ],
     ],
   ],
   [
-    "Open questions",
+    "Open Questions",
     [
       [
-        "Physical capabilities",
-        "Strength, speed, jumping, climbing, swimming.",
+        "Physical Capabilities",
+        "Strength, Speed, Jumping, Climbing, Swimming.",
         "U",
       ],
       [
-        "Healing & durability",
-        "Regeneration, toughness, environmental tolerances.",
+        "Healing & Durability",
+        "Regeneration, Toughness, Environmental Tolerances.",
         "U",
       ],
-      ["Ear receptors & telepathy", "Anatomy and mechanics.", "U"],
-      ["Sensitive body regions", "Which areas, and how sensitive.", "U"],
-      ["Reproductive biology", "Detailed mechanics.", "U"],
+      ["Ear Receptors & Telepathy", "Anatomy and Mechanics.", "U"],
+      ["Sensitive Body Regions", "Which areas, and how sensitive.", "U"],
+      ["Reproductive Biology", "Detailed Mechanics.", "U"],
       [
         "Society",
-        "Colony organization, leadership, families, child-rearing, customs, language.",
+        "Colony Organization, Leadership, Families, Child-Rearing, Customs, Language.",
         "U",
       ],
-      ["History & origins", "Not yet developed.", "U"],
-      ["Ecology", "Cavern ecology, crystal types, mineral systems.", "U"],
-      ["Relationships", "With humans and other species.", "U"],
+      ["History & Origins", "Not yet developed.", "U"],
+      ["Ecology", "Cavern Ecology, Crystal Types, Mineral Systems.", "U"],
+      ["Relationships", "With Humans and Other Species.", "U"],
     ],
   ],
 ];
 
-const KOFI = window.KOFI || "https://ko-fi.com/rainbow_vis";
+// =========================
+// Ko-Fi Link
+// =========================
+const KOFI = window.KOFI || "";
 
+// =========================
+// Ko-Fi Function
+// =========================
 function Kofi() {
   return KOFI
     ? h("a", { href: KOFI, target: "_blank", rel: "noopener" }, "Ko-fi page")
     : "Ko-fi page";
 }
 
+// =========================
+// Marked Containers
+// =========================
 function Marked({ src, alt, cls, style }) {
   return h(
     "span",
@@ -333,6 +351,9 @@ function Marked({ src, alt, cls, style }) {
   );
 }
 
+// =========================
+// Site Rows
+// =========================
 function Row({ r, sec }) {
   const s = ST[r[2]];
   return h(
@@ -350,11 +371,12 @@ function Row({ r, sec }) {
 }
 
 // =========================
-// Zoom Viewer
+// Zoom Viewer Box
 // =========================
 function Viewer({ items, start, onClose }) {
   const [n, setN] = useState(start),
     [pct, setPct] = useState(100);
+  
   const box = useRef(null),
     el = useRef(null),
     closeB = useRef(null),
@@ -362,8 +384,9 @@ function Viewer({ items, start, onClose }) {
     P = useRef(new Map()),
     G = useRef({}),
     last = useRef({ t: 0, x: 0, y: 0 });
+  
   const MAX = 6;
-  /* keep the image from being dragged off screen */
+  
   const clamp = () => {
     const t = T.current,
       b = box.current,
@@ -374,6 +397,7 @@ function Viewer({ items, start, onClose }) {
     t.x = Math.min(mx, Math.max(-mx, t.x));
     t.y = Math.min(my, Math.max(-my, t.y));
   };
+  
   const ap = () => {
     clamp();
     const t = T.current;
@@ -381,6 +405,7 @@ function Viewer({ items, start, onClose }) {
       "translate(" + t.x + "px," + t.y + "px) scale(" + t.s + ")";
     setPct(Math.round(t.s * 100));
   };
+  
   const zoomAt = (ns, px, py) => {
     const t = T.current;
     ns = Math.min(MAX, Math.max(1, ns));
@@ -394,25 +419,33 @@ function Viewer({ items, start, onClose }) {
     }
     ap();
   };
+  
   const rel = (cx, cy) => {
     const r = box.current.getBoundingClientRect();
     return [cx - r.left - r.width / 2, cy - r.top - r.height / 2];
   };
+  
   const reset = () => {
     T.current = { s: 1, x: 0, y: 0 };
     ap();
   };
+  
   const go = (d) => setN((v) => (v + d + items.length) % items.length);
   useEffect(() => {
     T.current = { s: 1, x: 0, y: 0 };
     if (el.current) ap();
   }, [n]);
+  
   useEffect(() => {
     const prev = document.activeElement,
       ov = document.body.style.overflow;
+    
     document.body.style.overflow = "hidden";
+    
     if (closeB.current) closeB.current.focus();
+    
     const b = box.current;
+    
     const wh = (e) => {
       e.preventDefault();
       const q = rel(e.clientX, e.clientY);
@@ -422,7 +455,9 @@ function Viewer({ items, start, onClose }) {
         q[1],
       );
     };
+    
     b.addEventListener("wheel", wh, { passive: false });
+    
     const kd = (e) => {
       const t = T.current,
         k = e.key;
@@ -443,23 +478,32 @@ function Viewer({ items, start, onClose }) {
         }
       }
     };
+    
     window.addEventListener("keydown", kd);
+    
+    window.addEventListener("resize", ap);
+    
     return () => {
       b.removeEventListener("wheel", wh);
       window.removeEventListener("keydown", kd);
+      window.removeEventListener("resize", ap);
       document.body.style.overflow = ov;
       if (prev && prev.focus) prev.focus();
     };
   }, []);
+  
   const vals = () => [...P.current.values()];
+  
   const dist = () => {
     const v = vals();
     return Math.hypot(v[0].x - v[1].x, v[0].y - v[1].y);
   };
+  
   const mid = () => {
     const v = vals();
     return rel((v[0].x + v[1].x) / 2, (v[0].y + v[1].y) / 2);
   };
+  
   const base = () => {
     const t = T.current;
     if (P.current.size === 2) {
@@ -483,12 +527,14 @@ function Viewer({ items, start, onClose }) {
       };
     }
   };
+  
   const down = (e) => {
     box.current.setPointerCapture(e.pointerId);
     P.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (P.current.size === 1) G.current = { moved: 0 };
     base();
   };
+  
   const move = (e) => {
     if (!P.current.has(e.pointerId)) return;
     P.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -512,6 +558,7 @@ function Viewer({ items, start, onClose }) {
       }
     }
   };
+  
   const up = (e) => {
     if (!P.current.has(e.pointerId)) return;
     const g = G.current,
@@ -519,17 +566,7 @@ function Viewer({ items, start, onClose }) {
     P.current.delete(e.pointerId);
     if (was === 1 && (g.moved || 0) < 8) {
       const now = Date.now(),
-        l = last.current,
-        r = el.current.getBoundingClientRect();
-      const inside =
-        e.clientX >= r.left &&
-        e.clientX <= r.right &&
-        e.clientY >= r.top &&
-        e.clientY <= r.bottom;
-      if (!inside) {
-        onClose();
-        return;
-      }
+        l = last.current;
       if (
         now - l.t < 320 &&
         Math.hypot(e.clientX - l.x, e.clientY - l.y) < 30
@@ -544,97 +581,131 @@ function Viewer({ items, start, onClose }) {
       base();
     }
   };
+  
+  const bd = useRef(false);
+  
   const it = items[n],
     many = items.length > 1;
+  
   return h(
     "div",
     {
       className: "lb",
       role: "dialog",
       "aria-modal": "true",
-      "aria-label": it[1],
+      "aria-label": "Image previewer",
+      onPointerDown: (e) => {
+        bd.current = e.target === e.currentTarget;
+      },
+      onClick: (e) => {
+        if (bd.current && e.target === e.currentTarget) onClose();
+      },
     },
     h(
       "div",
-      { className: "lbbar" },
+      { className: "lbcard" },
       h(
-        "span",
-        { className: "lbt" },
-        it[1] + (many ? " (" + (n + 1) + "/" + items.length + ")" : ""),
-      ),
-      h(
-        "span",
-        { className: "lbc" },
-        many
-          ? h(
-              "button",
-              {
-                className: "chip",
-                onClick: () => go(-1),
-                "aria-label": "Previous image",
-              },
-              "\u2039",
-            )
-          : null,
-        many
-          ? h(
-              "button",
-              {
-                className: "chip",
-                onClick: () => go(1),
-                "aria-label": "Next image",
-              },
-              "\u203a",
-            )
-          : null,
+        "div",
+        { className: "lbhead" },
+        h(
+          "div",
+          { className: "lbtitle" },
+          h("strong", null, it[1]),
+          many ? h("span", null, n + 1 + " of " + items.length) : null,
+        ),
         h(
           "button",
           {
             className: "chip",
-            onClick: () => zoomAt(T.current.s / 1.4, 0, 0),
-            "aria-label": "Zoom out",
+            ref: closeB,
+            onClick: onClose,
+            "aria-label": "Close previewer",
           },
-          "\u2212",
-        ),
-        h("span", { className: "lbp" }, pct + "%"),
-        h(
-          "button",
-          {
-            className: "chip",
-            onClick: () => zoomAt(T.current.s * 1.4, 0, 0),
-            "aria-label": "Zoom in",
-          },
-          "+",
-        ),
-        h("button", { className: "chip", onClick: reset }, "Fit"),
-        h(
-          "button",
-          { className: "chip", ref: closeB, onClick: onClose },
           "Close",
         ),
       ),
-    ),
-    h(
-      "div",
-      {
-        className: "lbbox",
-        ref: box,
-        style: { cursor: pct > 100 ? "grab" : "zoom-in" },
-        onPointerDown: down,
-        onPointerMove: move,
-        onPointerUp: up,
-        onPointerCancel: up,
-      },
       h(
         "div",
-        { className: "vimg", ref: el },
-        h(Marked, { src: it[0], alt: it[3] }),
+        {
+          className: "lbbox",
+          ref: box,
+          style: { cursor: pct > 100 ? "grab" : "zoom-in" },
+          onPointerDown: down,
+          onPointerMove: move,
+          onPointerUp: up,
+          onPointerCancel: up,
+        },
+        h(
+          "div",
+          { className: "vimg", ref: el },
+          h(Marked, { src: it[0], alt: it[3] }),
+        ),
       ),
-    ),
-    h(
-      "p",
-      { className: "lbh" },
-      "Scroll or pinch to zoom. Double-tap or double-click to toggle. Drag to move.",
+      h(
+        "div",
+        { className: "lbfoot" },
+        h(
+          "div",
+          { className: "lbtools" },
+          many
+            ? h(
+                "div",
+                {
+                  className: "lbgroup",
+                  role: "group",
+                  "aria-label": "Switch image",
+                },
+                h(
+                  "button",
+                  {
+                    className: "chip",
+                    onClick: () => go(-1),
+                    "aria-label": "Previous image",
+                  },
+                  "\u2039",
+                ),
+                h(
+                  "button",
+                  {
+                    className: "chip",
+                    onClick: () => go(1),
+                    "aria-label": "Next image",
+                  },
+                  "\u203a",
+                ),
+              )
+            : null,
+          h(
+            "div",
+            { className: "lbgroup", role: "group", "aria-label": "Zoom" },
+            h(
+              "button",
+              {
+                className: "chip",
+                onClick: () => zoomAt(T.current.s / 1.4, 0, 0),
+                "aria-label": "Zoom out",
+              },
+              "\u2212",
+            ),
+            h("span", { className: "lbp" }, pct + "%"),
+            h(
+              "button",
+              {
+                className: "chip",
+                onClick: () => zoomAt(T.current.s * 1.4, 0, 0),
+                "aria-label": "Zoom in",
+              },
+              "+",
+            ),
+            h("button", { className: "chip", onClick: reset }, "Fit"),
+          ),
+        ),
+        h(
+          "p",
+          { className: "lbh" },
+          "Scroll/Pinch to Zoom. Double-Tap to Toggle. Drag to Move.",
+        ),
+      ),
     ),
   );
 }
@@ -644,20 +715,22 @@ function Viewer({ items, start, onClose }) {
 // =========================
 function Gallery() {
   const [open, setOpen] = useState(null);
+  
   const items = [
     [
       IMG.sheet,
-      "Reference sheet",
-      "Front and back views, head, tail, expressions, and body silhouettes. Watermarked version.",
-      "Religy reference sheet: front and back views, head, tail, expressions, and body silhouettes",
+      "Reference Sheet",
+      "Front & Back views, Tail, Expressions, Themed Color Picker (Lizzards), Full-Body Preview, and Lore & Info Boxes! Watermarked version.",
+      "This is the Official Religy Reference Sheet made by StarKoi!",
     ],
     [
       IMG.art,
-      "Religy art",
-      "Art piece of a Religy. Watermarked version.",
-      "Art of a fluffy white Religy standing on its hind legs",
+      "Full-Body Art",
+      "Full-Body art-piece of a Religy. Watermarked version.",
+      "This is an art-piece you can have of the Religy made by StarKoi!",
     ],
   ];
+  
   return h(
     "div",
     { className: "gal" },
@@ -670,7 +743,7 @@ function Gallery() {
           {
             className: "thumb",
             onClick: () => setOpen(k),
-            "aria-label": "Open " + i[1] + " full screen",
+            "aria-label": "Open " + i[1] + " Full Screen",
           },
           h(Marked, { src: i[0], alt: i[3] }),
         ),
@@ -691,18 +764,25 @@ function Gallery() {
   );
 }
 
+// =========================
+// Religy GL
+// =========================
 const GL = [
-  ["~132+ years", "Typical lifespan"],
+  ["~132+ years", "Average Lifespan"],
   ["~20yrs", "Adulthood"],
-  ["~10yrs", "Glow begins"],
-  ["~75mph", "Top speed on all fours"],
+  ["~10yrs", "When a Religy\u2019s \u2019Glow\u2019 develops"],
+  ["~15mph", "Top Speed: 2 limbs"],
+  ["~75mph", "Top Speed: 4 limbs"],
 ];
 
+// =========================
+// Religy Species
+// =========================
 function Religy({ go }) {
   const [t, setT] = useState(0),
     [f, setF] = useState("A"),
     [q, setQ] = useState("");
-  const isRef = TABS[t][0] === "Reference sheet",
+  const isRef = TABS[t][0] === "Reference Sheet",
     qq = q.trim().toLowerCase();
   const all = [].concat(...TABS.map((x) => x[1].map((r) => [x[0], r])));
   const res = all.filter(
@@ -732,7 +812,7 @@ function Religy({ go }) {
             : h(
                 "p",
                 { className: "empty" },
-                "Nothing in this section has that status. Choose All to see every entry.",
+                "Nothing in this section has that status. Choose \u2019All\u2019 to see every entry.",
               ),
         );
   return h(
@@ -750,7 +830,7 @@ function Religy({ go }) {
       h(
         "p",
         { className: "meta" },
-        "Pronounced Rell-ih-g. Owned by RainbowVis, co-owned by StarKoi.",
+        "Pronounced (\u2019Rell-ih-g\u2019). Owned by RainbowVis, Co-Owned by StarKoi.",
       ),
     ),
     h(
@@ -836,6 +916,9 @@ function Religy({ go }) {
   );
 }
 
+// =========================
+// Home Area
+// =========================
 function Home({ go }) {
   return h(
     "main",
@@ -843,7 +926,7 @@ function Home({ go }) {
     h(
       "section",
       { className: "hero" },
-      h("p", { className: "eyebrow" }, "Universe encyclopedia"),
+      h("p", { className: "eyebrow" }, "Universe Encyclopedia"),
       h("h1", null, "Aveleiria"),
       h(
         "p",
@@ -853,7 +936,7 @@ function Home({ go }) {
       h(
         "button",
         { className: "btn", onClick: () => go("religy") },
-        "Open the Religy reference",
+        "Open the Religy Reference",
       ),
     ),
     h("h2", { className: "sh" }, "Species"),
@@ -862,7 +945,7 @@ function Home({ go }) {
       { className: "card sp", onClick: () => go("religy") },
       h(Marked, {
         src: IMG.art,
-        alt: "Art of a fluffy white Religy standing on its hind legs",
+        alt: "Full-Body Art-piece of the Religy",
         cls: "cardimg",
       }),
       h(
@@ -877,7 +960,7 @@ function Home({ go }) {
         h(
           "span",
           { className: "pill" },
-          "Reference sheet \u00b7 Biology \u00b7 Senses",
+          "Reference Sheet \u00b7 Biology \u00b7 Senses",
         ),
       ),
     ),
@@ -889,6 +972,9 @@ function Home({ go }) {
   );
 }
 
+// =========================
+// App Function
+// =========================
 function App() {
   const [p, setP] = useState("home"),
     [hue, setHue] = useState(280);
