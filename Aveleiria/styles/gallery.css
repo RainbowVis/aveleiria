@@ -1,0 +1,117 @@
+.gal figure {
+    margin: 0 0 28px
+}
+
+.gal figure:nth-of-type(2) {
+    max-width: 520px
+}
+
+.thumb {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    cursor: zoom-in
+}
+
+.thumb img {
+    display: block;
+    width: 100%;
+    height: auto
+}
+
+figcaption {
+    margin-top: 10px;
+    color: var(--mut);
+    font-size: 15px
+}
+
+figcaption b {
+    display: block;
+    color: var(--ink);
+    font: 700 18px Bricolage Grotesque, sans-serif
+}
+
+.lb {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(10, 8, 18, .95);
+    display: flex;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px)
+}
+
+.lbbar {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding: 10px 14px
+}
+
+.lbimg {
+    flex: 1;
+    overflow: auto;
+    padding: 0 14px 14px
+}
+
+.lbimg img {
+    display: block;
+    background: #fff;
+    border-radius: 8px;
+    height: auto;
+    max-width: none;
+    cursor: zoom-in
+}
+
+.wm {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    user-select: none
+}
+
+.wm img {
+    display: block;
+    width: 100%;
+    height: auto;
+    -webkit-user-drag: none;
+    pointer-events: none
+}
+
+.wmo {
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='140'><text x='150' y='74' text-anchor='middle' transform='rotate(-28 150 70)' font-family='Arial,sans-serif' font-size='13' font-weight='700' fill='%23606080' fill-opacity='.11'>RAINBOWVIS’S PROPERTY</text></svg>") repeat
+}
+
+.sp {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    align-items: center
+}
+
+.cardimg {
+    width: 110px;
+    height: 110px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--line)
+}
+
+.cardimg img {
+    height: 100%;
+    object-fit: cover
+}
+
+.lbimg .wm {
+    background: #fff;
+    border-radius: 8px;
+    cursor: zoom-in
+}
