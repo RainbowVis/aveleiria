@@ -692,10 +692,10 @@ function Gallery() {
 }
 
 const GL = [
-  ["132+ years", "Typical lifespan"],
-  ["About 20", "Adulthood"],
-  ["About 10", "Glow begins"],
-  ["Cheetah-fast", "Top speed on all fours"],
+  ["~132+ years", "Typical lifespan"],
+  ["~20yrs", "Adulthood"],
+  ["~10yrs", "Glow begins"],
+  ["~75mph", "Top speed on all fours"],
 ];
 
 function Religy({ go }) {
