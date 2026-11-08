@@ -1,5 +1,5 @@
 const h = React.createElement,
-  { useState, useEffect } = React;
+  { useState, useEffect, useRef } = React;
 
 const ST = {
   M: ["Mandatory", "hsl(var(--h) 95% 62%)"],
@@ -312,7 +312,7 @@ const TABS = [
   ],
 ];
 
-const KOFI = window.KOFI || "";
+const KOFI = window.KOFI || "https://ko-fi.com/rainbow_vis";
 
 function Kofi() {
   return KOFI
@@ -349,16 +349,301 @@ function Row({ r, sec }) {
   );
 }
 
-function Gallery() {
-  const [z, setZ] = useState(null),
-    [big, setBig] = useState(false);
+// =========================
+// Zoom Viewer
+// =========================
+function Viewer({ items, start, onClose }) {
+  const [n, setN] = useState(start),
+    [pct, setPct] = useState(100);
+  const box = useRef(null),
+    el = useRef(null),
+    closeB = useRef(null),
+    T = useRef({ s: 1, x: 0, y: 0 }),
+    P = useRef(new Map()),
+    G = useRef({}),
+    last = useRef({ t: 0, x: 0, y: 0 });
+  const MAX = 6;
+  /* keep the image from being dragged off screen */
+  const clamp = () => {
+    const t = T.current,
+      b = box.current,
+      e = el.current;
+    if (!b || !e) return;
+    const mx = Math.max(0, (e.offsetWidth * t.s - b.clientWidth) / 2),
+      my = Math.max(0, (e.offsetHeight * t.s - b.clientHeight) / 2);
+    t.x = Math.min(mx, Math.max(-mx, t.x));
+    t.y = Math.min(my, Math.max(-my, t.y));
+  };
+  const ap = () => {
+    clamp();
+    const t = T.current;
+    el.current.style.transform =
+      "translate(" + t.x + "px," + t.y + "px) scale(" + t.s + ")";
+    setPct(Math.round(t.s * 100));
+  };
+  const zoomAt = (ns, px, py) => {
+    const t = T.current;
+    ns = Math.min(MAX, Math.max(1, ns));
+    const k = ns / t.s;
+    t.x = px - (px - t.x) * k;
+    t.y = py - (py - t.y) * k;
+    t.s = ns;
+    if (ns === 1) {
+      t.x = 0;
+      t.y = 0;
+    }
+    ap();
+  };
+  const rel = (cx, cy) => {
+    const r = box.current.getBoundingClientRect();
+    return [cx - r.left - r.width / 2, cy - r.top - r.height / 2];
+  };
+  const reset = () => {
+    T.current = { s: 1, x: 0, y: 0 };
+    ap();
+  };
+  const go = (d) => setN((v) => (v + d + items.length) % items.length);
   useEffect(() => {
-    const k = (e) => {
-      if (e.key === "Escape") setZ(null);
+    T.current = { s: 1, x: 0, y: 0 };
+    if (el.current) ap();
+  }, [n]);
+  useEffect(() => {
+    const prev = document.activeElement,
+      ov = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    if (closeB.current) closeB.current.focus();
+    const b = box.current;
+    const wh = (e) => {
+      e.preventDefault();
+      const q = rel(e.clientX, e.clientY);
+      zoomAt(
+        T.current.s * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)),
+        q[0],
+        q[1],
+      );
     };
-    window.addEventListener("keydown", k);
-    return () => window.removeEventListener("keydown", k);
+    b.addEventListener("wheel", wh, { passive: false });
+    const kd = (e) => {
+      const t = T.current,
+        k = e.key;
+      if (k === "Escape") onClose();
+      else if (k === "+" || k === "=") zoomAt(t.s * 1.4, 0, 0);
+      else if (k === "-" || k === "_") zoomAt(t.s / 1.4, 0, 0);
+      else if (k === "0") reset();
+      else if (k === "ArrowLeft" || k === "ArrowRight") {
+        const d = k === "ArrowLeft" ? 1 : -1;
+        if (t.s > 1) {
+          t.x += d * 60;
+          ap();
+        } else go(-d);
+      } else if (k === "ArrowUp" || k === "ArrowDown") {
+        if (t.s > 1) {
+          t.y += (k === "ArrowUp" ? 1 : -1) * 60;
+          ap();
+        }
+      }
+    };
+    window.addEventListener("keydown", kd);
+    return () => {
+      b.removeEventListener("wheel", wh);
+      window.removeEventListener("keydown", kd);
+      document.body.style.overflow = ov;
+      if (prev && prev.focus) prev.focus();
+    };
   }, []);
+  const vals = () => [...P.current.values()];
+  const dist = () => {
+    const v = vals();
+    return Math.hypot(v[0].x - v[1].x, v[0].y - v[1].y);
+  };
+  const mid = () => {
+    const v = vals();
+    return rel((v[0].x + v[1].x) / 2, (v[0].y + v[1].y) / 2);
+  };
+  const base = () => {
+    const t = T.current;
+    if (P.current.size === 2) {
+      const m = mid();
+      G.current = {
+        mode: "pinch",
+        d0: dist() || 1,
+        s0: t.s,
+        q: [(m[0] - t.x) / t.s, (m[1] - t.y) / t.s],
+        moved: 99,
+      };
+    } else {
+      const v = vals()[0];
+      G.current = {
+        mode: "pan",
+        sx: v.x,
+        sy: v.y,
+        x0: t.x,
+        y0: t.y,
+        moved: G.current.moved || 0,
+      };
+    }
+  };
+  const down = (e) => {
+    box.current.setPointerCapture(e.pointerId);
+    P.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (P.current.size === 1) G.current = { moved: 0 };
+    base();
+  };
+  const move = (e) => {
+    if (!P.current.has(e.pointerId)) return;
+    P.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const g = G.current,
+      t = T.current;
+    if (g.mode === "pinch" && P.current.size === 2) {
+      const ns = Math.min(MAX, Math.max(1, (g.s0 * dist()) / g.d0)),
+        m = mid();
+      t.s = ns;
+      t.x = m[0] - ns * g.q[0];
+      t.y = m[1] - ns * g.q[1];
+      ap();
+    } else if (g.mode === "pan" && P.current.size === 1) {
+      const dx = e.clientX - g.sx,
+        dy = e.clientY - g.sy;
+      g.moved = Math.max(g.moved || 0, Math.hypot(dx, dy));
+      if (t.s > 1) {
+        t.x = g.x0 + dx;
+        t.y = g.y0 + dy;
+        ap();
+      }
+    }
+  };
+  const up = (e) => {
+    if (!P.current.has(e.pointerId)) return;
+    const g = G.current,
+      was = P.current.size;
+    P.current.delete(e.pointerId);
+    if (was === 1 && (g.moved || 0) < 8) {
+      const now = Date.now(),
+        l = last.current,
+        r = el.current.getBoundingClientRect();
+      const inside =
+        e.clientX >= r.left &&
+        e.clientX <= r.right &&
+        e.clientY >= r.top &&
+        e.clientY <= r.bottom;
+      if (!inside) {
+        onClose();
+        return;
+      }
+      if (
+        now - l.t < 320 &&
+        Math.hypot(e.clientX - l.x, e.clientY - l.y) < 30
+      ) {
+        const q = rel(e.clientX, e.clientY);
+        zoomAt(T.current.s > 1.05 ? 1 : 2.5, q[0], q[1]);
+        last.current = { t: 0, x: 0, y: 0 };
+      } else last.current = { t: now, x: e.clientX, y: e.clientY };
+    }
+    if (P.current.size > 0) {
+      G.current.moved = 99;
+      base();
+    }
+  };
+  const it = items[n],
+    many = items.length > 1;
+  return h(
+    "div",
+    {
+      className: "lb",
+      role: "dialog",
+      "aria-modal": "true",
+      "aria-label": it[1],
+    },
+    h(
+      "div",
+      { className: "lbbar" },
+      h(
+        "span",
+        { className: "lbt" },
+        it[1] + (many ? " (" + (n + 1) + "/" + items.length + ")" : ""),
+      ),
+      h(
+        "span",
+        { className: "lbc" },
+        many
+          ? h(
+              "button",
+              {
+                className: "chip",
+                onClick: () => go(-1),
+                "aria-label": "Previous image",
+              },
+              "\u2039",
+            )
+          : null,
+        many
+          ? h(
+              "button",
+              {
+                className: "chip",
+                onClick: () => go(1),
+                "aria-label": "Next image",
+              },
+              "\u203a",
+            )
+          : null,
+        h(
+          "button",
+          {
+            className: "chip",
+            onClick: () => zoomAt(T.current.s / 1.4, 0, 0),
+            "aria-label": "Zoom out",
+          },
+          "\u2212",
+        ),
+        h("span", { className: "lbp" }, pct + "%"),
+        h(
+          "button",
+          {
+            className: "chip",
+            onClick: () => zoomAt(T.current.s * 1.4, 0, 0),
+            "aria-label": "Zoom in",
+          },
+          "+",
+        ),
+        h("button", { className: "chip", onClick: reset }, "Fit"),
+        h(
+          "button",
+          { className: "chip", ref: closeB, onClick: onClose },
+          "Close",
+        ),
+      ),
+    ),
+    h(
+      "div",
+      {
+        className: "lbbox",
+        ref: box,
+        style: { cursor: pct > 100 ? "grab" : "zoom-in" },
+        onPointerDown: down,
+        onPointerMove: move,
+        onPointerUp: up,
+        onPointerCancel: up,
+      },
+      h(
+        "div",
+        { className: "vimg", ref: el },
+        h(Marked, { src: it[0], alt: it[3] }),
+      ),
+    ),
+    h(
+      "p",
+      { className: "lbh" },
+      "Scroll or pinch to zoom. Double-tap or double-click to toggle. Drag to move.",
+    ),
+  );
+}
+
+// =========================
+// Reference sheet gallery
+// =========================
+function Gallery() {
+  const [open, setOpen] = useState(null);
   const items = [
     [
       IMG.sheet,
@@ -376,7 +661,7 @@ function Gallery() {
   return h(
     "div",
     { className: "gal" },
-    items.map((i) =>
+    items.map((i, k) =>
       h(
         "figure",
         { key: i[1] },
@@ -384,10 +669,7 @@ function Gallery() {
           "button",
           {
             className: "thumb",
-            onClick: () => {
-              setBig(false);
-              setZ(i);
-            },
+            onClick: () => setOpen(k),
             "aria-label": "Open " + i[1] + " full screen",
           },
           h(Marked, { src: i[0], alt: i[3] }),
@@ -403,34 +685,8 @@ function Gallery() {
         ),
       ),
     ),
-    z
-      ? h(
-          "div",
-          { className: "lb", role: "dialog", "aria-label": z[1] },
-          h(
-            "div",
-            { className: "lbbar" },
-            h(
-              "button",
-              { className: "chip", onClick: () => setBig(!big) },
-              big ? "Fit to screen" : "Zoom in",
-            ),
-            h(
-              "button",
-              { className: "chip", onClick: () => setZ(null) },
-              "Close",
-            ),
-          ),
-          h(
-            "div",
-            { className: "lbimg" },
-            h(Marked, {
-              src: z[0],
-              alt: z[3],
-              style: { width: big ? "260%" : "100%" },
-            }),
-          ),
-        )
+    open !== null
+      ? h(Viewer, { items, start: open, onClose: () => setOpen(null) })
       : null,
   );
 }
