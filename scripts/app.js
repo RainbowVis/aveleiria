@@ -324,15 +324,15 @@ const TABS = [
 // =========================
 // Ko-Fi Link
 // =========================
-const KOFI = window.KOFI || "";
+const KOFI = window.KOFI || "https://ko-fi.com/rainbow_vis";
 
 // =========================
 // Ko-Fi Function
 // =========================
 function Kofi() {
   return KOFI
-    ? h("a", { href: KOFI, target: "_blank", rel: "noopener" }, "Ko-fi page")
-    : "Ko-fi page";
+    ? h("a", { href: KOFI, target: "_blank", rel: "noopener" }, "Ko-Fi Page")
+    : "Ko-Fi Page";
 }
 
 // =========================
